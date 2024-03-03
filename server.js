@@ -1,9 +1,16 @@
 const express = require("express")
+const fs = require("fs")
 const app = express()
 
 
+
 app.get('/', (req, res) => {
-    res.send('Hello World!')
+    fs.readFile('./db.json', 'utf-8', (err, data) => {
+        if(!err) {
+            res.send(data)
+        }
+    })
+    // res.send('Hello World!')
 })
 
 app.get('/hello', (req, res) => {
