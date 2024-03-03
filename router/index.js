@@ -1,12 +1,10 @@
 const express = require("express")
 const router = express.Router()
+router.use('/user', require('./user'))
+router.use('/video', require('./video'))
 
-router.get('/', (req, res) => {
-    res.send('/index')
+router.use((req, res, next) => {
+    res.send("404 Not Found")
+    next()
 })
-
-router.get('/user', (req, res) => {
-    res.send('/user')
-})
-
 module.exports = router

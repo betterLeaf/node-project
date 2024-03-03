@@ -1,12 +1,17 @@
 const express = require("express")
+const cors = require("cors")
+const morgan = require("morgan")
 const app = express()
 const router = require('./router')
-const routerVideo = require('./router/video')
-app.use(router)
-app.use('/video', routerVideo)
-app.use((req, res, next) => {
-    res.status(400).send("404 Not Found")
-})
+
+app
+.use(express.json())
+.use(express.urlencoded())
+.use(cors())
+.use(morgan('dev'))
+.use('/api/v1', router)
+
+
 app.listen(3000, () => {
     console.log('http://localhost:' + 3000)
 })
