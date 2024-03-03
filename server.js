@@ -26,7 +26,13 @@ app.get('/hello', (req, res) => {
  
 app.post('/login', (req, res) => {
     console.log(req.headers)
-    console.log(req.body)
+    let data = JSON.stringify(req.body)
+    console.log( '12321', )
+    fs.writeFile('./db.json', data, (err) => {
+        if(err) {
+            console.log(err)
+        }
+    })
     res.send('pose enter')
 })
 
