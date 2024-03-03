@@ -14,12 +14,13 @@ module.exports.verifyToken = async (req, res, next) => {
         const token = authorization.split('Bearer ')[1]
         try {
             const info = await verify( token, '64b9df23-d293-424b-9028-3b0e7a5edb72')
+            req.userinfo = info
             next()
         } catch (error) {
             res.status(401).send('token无效')
         }
     } else {
-        res.status(401).send('token为空')
+        res.status(401).send('请登陆')
     }
 
 }
