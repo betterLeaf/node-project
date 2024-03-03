@@ -1,42 +1,12 @@
 const express = require("express")
-const fs = require("fs")
-const { promisify }= require("util")
 const app = express()
-const readFile = promisify(fs.readFile)
-
-app.use(express.urlencoded())
-app.use(express.json())
-
-app.get('/', async (req, res) => {
-    // fs.readFile('./db.json', 'utf-8', (err, data) => {
-    //     if(!err) {
-    //         res.send(data)
-    //     }
-    // })
-    try {
-        const data = await readFile('./db.json', 'utf-8')
-        res.send(data)
-    } catch (error) {
-        res.send(error)
-    }
+const router = require('./router')
+const routerVideo = require('./router/video')
+app.use(router)
+app.use('/video', routerVideo)
+app.use((req, res, next) => {
+    res.status(400).send("404 Not Found")
 })
-app.get('/hello', (req, res) => {
-    res.send('Hello World! hhhhhh')
-})
- 
-app.post('/login', (req, res) => {
-    console.log(req.headers)
-    let data = JSON.stringify(req.body)
-    console.log( '12321', )
-    fs.writeFile('./db.json', data, (err) => {
-        if(err) {
-            console.log(err)
-        }
-    })
-    res.send('pose enter')
-})
-
-
 app.listen(3000, () => {
     console.log('http://localhost:' + 3000)
 })
