@@ -14,6 +14,7 @@ module.exports.verifyToken = async (req, res, next) => {
         const token = authorization.split('Bearer ')[1]
         try {
             const info = await verify( token, '64b9df23-d293-424b-9028-3b0e7a5edb72')
+            console.log('req', req.body)
             req.userinfo = info
             next()
         } catch (error) {

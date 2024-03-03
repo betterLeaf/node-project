@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const { Schema } = mongoose;
 const md5 = require('../util/md5')
+const baseModel = require('./baseModel')
 
 
 const UserSchema = new Schema({
@@ -30,15 +31,7 @@ const UserSchema = new Schema({
         type: String,
         default: null
     },
-    createAt: {
-        type: Date,
-        default: Date.now()
-    },
-    updateAt: {
-        type: Date,
-        default: Date.now()
-    },
-    
+    ...baseModel
 })
 
 module.exports = UserSchema

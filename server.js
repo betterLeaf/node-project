@@ -4,7 +4,9 @@ const morgan = require("morgan")
 const app = express()
 const router = require('./router')
 
+
 app
+.use(express.static('public'))
 .use(express.json())
 .use(express.urlencoded())
 .use(cors())

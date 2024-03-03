@@ -33,3 +33,27 @@ module.exports.loginValidator = errorBack([
     body('password').notEmpty().withMessage("密码不能为空"),
 ])
 
+
+module.exports.updateValidator = errorBack([
+    body('username')
+        .custom(async val => {
+            const validateResult = await User.findOne({username: val})
+            if(validateResult) {
+                return Promise.reject('用户名已被注册')
+            }
+        }).bail(),
+    body('email')
+        .custom(async val => {
+            const emailResult = await User.findOne({email: val})
+            if(emailResult) {
+                return Promise.reject('邮箱已被注册')
+            }
+        }).bail(),
+    body('phone')
+        .custom(async val => {
+            const phoneResult = await User.findOne({phone: val})
+            if(phoneResult) {
+                return Promise.reject('手机号已被注册')
+            }
+        }).bail(),
+])
