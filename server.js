@@ -1,15 +1,25 @@
 const express = require("express")
 const fs = require("fs")
+const { promisify }= require("util")
 const app = express()
+const readFile = promisify(fs.readFile)
 
 
 
-app.get('/', (req, res) => {
-    fs.readFile('./db.json', 'utf-8', (err, data) => {
-        if(!err) {
-            res.send(data)
-        }
-    })
+app.get('/', async (req, res) => {
+    // fs.readFile('./db.json', 'utf-8', (err, data) => {
+    //     if(!err) {
+    //         res.send(data)
+    //     }
+    // })
+
+
+    try {
+        const data = await readFile('./db.json', 'utf-8')
+        res.send(data)
+    } catch (error) {
+        res.send(error)
+    }
     // res.send('Hello World!')
 })
 
